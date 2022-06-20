@@ -1,8 +1,8 @@
-import {Platform, StyleSheet, Text, TextProps} from 'react-native';
+import {Platform, StyleProp, StyleSheet, Text, TextProps, TextStyle} from 'react-native';
 
 type AppTextPropsType = {
     children: string
-    style?: Object
+     style?: StyleProp<TextStyle>
 }
 
 export const AppText = ({children, style, ...restProps}: AppTextPropsType) => {

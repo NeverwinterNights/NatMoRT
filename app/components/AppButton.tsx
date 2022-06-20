@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity} from "react-native";
+import {StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle} from "react-native";
 
 import colors from "../config/colors";
 
@@ -8,17 +8,18 @@ type  ButtonPropsType = {
     title: string
     onPress?: () => void
     color?: keyof typeof colors;
-    customStyles?: Object
+    style?: StyleProp<ViewStyle>
+    labelStyle?: StyleProp<TextStyle>;
 }
 
 
-function AppButton({title, onPress, customStyles, color = "primary"}: ButtonPropsType) {
+function AppButton({title, onPress, style, labelStyle, color = "primary"}: ButtonPropsType) {
     return (
         <TouchableOpacity
-            style={[styles.button, {backgroundColor: colors[color]}, customStyles]}
+            style={[styles.button, {backgroundColor: colors[color]}, style]}
             onPress={onPress}
         >
-            <Text style={styles.text}>{title}</Text>
+            <Text style={[styles.text, labelStyle]}>{title}</Text>
         </TouchableOpacity>
     );
 }

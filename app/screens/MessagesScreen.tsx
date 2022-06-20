@@ -41,7 +41,7 @@ export const MessagesScreen = ({}: MessagesScreenPropsType) => {
         <Screen>
             <FlatList data={messages} keyExtractor={(item) => item.id.toString()} renderItem={({item}) =>
                 <ListItem
-                    onPress={() => console.log("ffff")}
+                    onPress={() => console.log()}
                     image={item.image}
                     title={item.title}
                     renderRightActions={() => (
@@ -54,9 +54,21 @@ export const MessagesScreen = ({}: MessagesScreenPropsType) => {
                       onRefresh={() => {
                           setMessages([
                               {
+                                  id: 1,
+                                  title: "T1",
+                                  description: "D1",
+                                  image: require("../assets/mosh.jpg"),
+                              },
+                              {
                                   id: 2,
                                   title: "T2",
                                   description: "D2",
+                                  image: require("../assets/mosh.jpg"),
+                              },
+                              {
+                                  id: 3,
+                                  title: "T3",
+                                  description: "D3",
                                   image: require("../assets/mosh.jpg"),
                               },
                           ]);

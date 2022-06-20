@@ -23,10 +23,10 @@ export const ListItem = ({image, title, subTitle, onPress, IconComponent, render
             <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
                 <View style={styles.container}>
                     {IconComponent}
-                    {image && <Image style={styles.image} source={image} />}
+                    {image && <Image style={styles.image} source={image}/>}
                     <View style={styles.infoContainer}>
                         <AppText style={styles.title}>{title}</AppText>
-                        {subTitle &&   <AppText style={styles.subTitle}>{subTitle}</AppText>}
+                        {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
                     </View>
                 </View>
             </TouchableHighlight>
@@ -37,17 +37,19 @@ export const ListItem = ({image, title, subTitle, onPress, IconComponent, render
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        padding: 15
+        padding: 15,
+        alignItems: "center",
+        backgroundColor: colors.white
     },
     image: {
         width: 70,
         height: 70,
         borderRadius: 70 / 2,
-        marginRight: 10
+
     },
     infoContainer: {
         justifyContent: "center",
-
+        marginLeft: 10,
     },
     title: {
         marginBottom: 3,
