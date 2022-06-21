@@ -9,13 +9,15 @@ import {CategoryType} from "../../App";
 import {PickerItem} from "./PickerItem";
 
 type  AppPickerPropsType = {
+    numbersOfColumn?: number
     icon?: keyof typeof MaterialCommunityIcons.glyphMap
     placeholder: string
     name?: string
-    width?: string
+    width?: string | number
     items: CategoryType[]
-    selectedItem: CategoryType
+    selectedItem?: CategoryType
     onSelectItem: (item: CategoryType) => void
+    PickerItemComponent?: (props:any)=> JSX.Element
 }
 
 export const AppPicker = ({
@@ -24,15 +26,17 @@ export const AppPicker = ({
                               onSelectItem,
                               items,
                               placeholder,
+                              width = "100%",
                               ...restProps
                           }: AppPickerPropsType & TextInputProps) => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <>
             <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-                <View style={[styles.container]}>
+                <View style={[styles.container, {width: width}]}>
                     {icon && <MaterialCommunityIcons style={styles.icon} name={icon} size={20} color={colors.medium}/>}
-                    <AppText style={styles.text}>{selectedItem ? selectedItem.label : placeholder}</AppText>
+                    {selectedItem ? <AppText style={styles.text}>{selectedItem?.label}</AppText> :
+                        <AppText style={styles.placeholder}>{placeholder}</AppText>}
                     <MaterialCommunityIcons name={"chevron-down"} size={20} color={colors.medium}/>
                 </View>
             </TouchableWithoutFeedback>
@@ -67,5 +71,10 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1
-    }
+    },
+    placeholder: {
+        color: colors.medium,
+        flex: 1,
+        fontSize: 18
+    },
 });

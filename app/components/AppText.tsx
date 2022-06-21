@@ -5,7 +5,7 @@ type AppTextPropsType = {
      style?: StyleProp<TextStyle>
 }
 
-export const AppText = ({children, style, ...restProps}: AppTextPropsType) => {
+export const AppText = ({children, style, ...restProps}: AppTextPropsType & TextProps) => {
     return (
         <Text style={[styles.text, style]} {...restProps}>{children}</Text>
     );

@@ -5,15 +5,15 @@ import defaultStyles from "../../config/styles"
 
 type  AppTextInputPropsType = {
     icon?: keyof typeof MaterialCommunityIcons.glyphMap
-    width?: number
+    width?: number | string
     style?: StyleProp<TextStyle>
 }
 
-export const AppTextInput = ({icon, width, style, ...restProps}: AppTextInputPropsType & TextInputProps) => {
+export const AppTextInput = ({icon, width="100%", style, ...restProps}: AppTextInputPropsType & TextInputProps) => {
     return (
         <View style={[styles.container, {width: width}]}>
             {icon && <MaterialCommunityIcons name={icon} style={styles.icon} size={20} color={colors.medium}/>}
-            <TextInput placeholderTextColor={defaultStyles.colors.medium}
+            <TextInput placeholderTextColor={colors.medium}
                        style={[defaultStyles.text, style]} {...restProps}/>
         </View>
     );

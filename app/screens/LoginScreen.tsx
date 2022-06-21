@@ -1,48 +1,59 @@
-import React, { useState } from 'react';
-import {Image, Keyboard, StyleSheet} from 'react-native';
+import React from 'react';
+import {Image, StyleSheet} from 'react-native';
 import {Screen} from "../components/Screen";
-import {AppTextInput} from "../components/form/AppTextInput";
-import AppButton from "../components/AppButton";
+import {Formik} from "formik";
+import * as Yup from "yup"
+import {AppFormField} from "../components/form/AppFormField";
+import {SubmitButton} from "../components/form/SubmitButton";
+import {AppForm} from "../components/form/AppForm";
 
 type LoginScreenPropsType = {}
 
 export const LoginScreen = ({}: LoginScreenPropsType) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
 
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().required().email().label("Email"),
+        password: Yup.string().required().min(4).label("Password"),
+    })
 
-    const onLoginButtonHandler = () => {
-        console.log (email, password)
-        Keyboard.dismiss()
-    }
+
     return (
         <Screen style={styles.container}>
             <Image style={styles.logo} source={require("../assets/logo-red.png")}/>
-            <AppTextInput
-                placeholder={"Email"}
-                icon={"email"}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                keyboardType={"email-address"}
-                onChangeText={(text)=> setEmail(text)}
-            />
-            <AppTextInput
-                placeholder={"Password"}
-                icon={"lock"}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                secureTextEntry
-                onChangeText={(text)=> setPassword(text)}
-            />
-            <AppButton title={"Login"} onPress={onLoginButtonHandler}/>
+            <AppForm
+                initialValues={{email: "", password: ""}}
+                onSubmit={(values) => console.log(values)}
+                validationSchema={validationSchema}
+            >
+                <AppFormField
+                    placeholder={"Email"}
+                    name={"email"}
+                    icon={"email"}
+                    autoCapitalize={"none"}
+                    autoCorrect={false}
+                    keyboardType={"email-address"}
+                />
+                <AppFormField
+                    name={"Password"}
+                    placeholder={"Password"}
+                    icon={"lock"}
+                    autoCapitalize={"none"}
+                    autoCorrect={false}
+                    secureTextEntry
+                />
+                <SubmitButton title={"Login"}/>
+            </AppForm>
         </Screen>
     );
 };
 
 const styles = StyleSheet.create({
+    error: {
+        color: "red"
+    },
     container: {
-        padding:10
+        padding: 10
     },
     logo: {
         width: 80,
