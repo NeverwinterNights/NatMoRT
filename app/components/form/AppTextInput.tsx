@@ -19,6 +19,7 @@ export const AppTextInput = ({icon, width="100%", style, ...restProps}: AppTextI
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.light,

@@ -5,8 +5,10 @@ import colors from "../config/colors";
 import {AppText} from "./AppText";
 import AppButton from "./AppButton";
 import {Screen} from "./Screen";
-import {CategoryType} from "../../App";
+
 import {PickerItem} from "./PickerItem";
+import {CategoryPickerItemPropsType} from "./CategoryPickerItem";
+import {CategoryType} from "../screens/ListingEditScreen";
 
 type  AppPickerPropsType = {
     numbersOfColumn?: number
@@ -17,7 +19,7 @@ type  AppPickerPropsType = {
     items: CategoryType[]
     selectedItem?: CategoryType
     onSelectItem: (item: CategoryType) => void
-    PickerItemComponent?: (props:any)=> JSX.Element
+    PickerItemComponent?: (props: CategoryPickerItemPropsType) => JSX.Element
 }
 
 export const AppPicker = ({
@@ -25,8 +27,10 @@ export const AppPicker = ({
                               selectedItem,
                               onSelectItem,
                               items,
+                              numbersOfColumn=1,
                               placeholder,
                               width = "100%",
+                              PickerItemComponent=PickerItem,
                               ...restProps
                           }: AppPickerPropsType & TextInputProps) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -41,17 +45,22 @@ export const AppPicker = ({
                 </View>
             </TouchableWithoutFeedback>
             <Modal visible={modalVisible} animationType={"slide"}>
-                <Screen>
+                <View style={{paddingHorizontal:10}}>
                     <AppButton title={"Close"} onPress={() => setModalVisible(false)}/>
                     <FlatList
                         data={items}
                         keyExtractor={(item) => item.value.toString()}
-                        renderItem={({item}) => <PickerItem
-                            onPress={() => {
-                                setModalVisible(false)
-                                onSelectItem(item)
-                            }} label={item.label}/>}/>
-                </Screen>
+                        numColumns={numbersOfColumn}
+                        renderItem={({item}) =>
+                            <PickerItemComponent
+                                item={item}
+                                onPress={() => {
+                                    setModalVisible(false)
+                                    onSelectItem(item)
+                                }}
+                                // label={item.label}/>}/>
+                            />}/>
+                </View>
             </Modal>
         </>
     );

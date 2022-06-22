@@ -33,7 +33,7 @@ const listings:ListingType[] = [
 export const ListingsScreen = ({}: ListingsScreenPropsType) => {
     return (
         <Screen style={styles.container}>
-            <FlatList data={listings} keyExtractor={(listing) => listing.id.toString()} renderItem={({item}) =>
+            <FlatList data={listings} showsVerticalScrollIndicator={false} keyExtractor={(listing) => listing.id.toString()} renderItem={({item}) =>
                 <Card title={item.title} subTitle={"$" + item.price} image={item.image}/>
             }/>
         </Screen>

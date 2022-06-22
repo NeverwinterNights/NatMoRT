@@ -11,20 +11,20 @@ import {ListingDetailsScreen} from "./app/screens/ListingDetailsScreen";
 import {MessagesScreen} from "./app/screens/MessagesScreen";
 
 
-export type CategoryType = {
-    label: string
-    value: number
-}
-
-const categories:CategoryType[] = [
-    { label:"Furniture", value:1},
-    { label:"Sport", value:2},
-    { label:"Goods", value:3},
-]
+// export type CategoryType = {
+//     label: string
+//     value: number
+// }
+//
+// const categories:CategoryType[] = [
+//     { label:"Furniture", value:1},
+//     { label:"Sport", value:2},
+//     { label:"Goods", value:3},
+// ]
 
 export default function App() {
 
-    const [category, setCategory] = useState<CategoryType>(categories[0]);
+    // const [category, setCategory] = useState<CategoryType>(categories[0]);
 
 
     return (
@@ -33,7 +33,7 @@ export default function App() {
             {/*<Screen>*/}
             {/*    <AppPicker selectedItem={category} onSelectItem={(item: any)=> setCategory(item)} items={categories} icon={"apps"} placeholder={"Category"}/>*/}
             {/*</Screen>*/}
-            <ListingEditScreen/>
+            <ListingsScreen/>
         </GestureHandlerRootView>
     );
 }
