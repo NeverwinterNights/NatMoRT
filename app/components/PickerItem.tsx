@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import { CategoryType } from '../screens/ListingEditScreen';
+
 import {AppText} from "./AppText";
+import {CategoryType} from "../store/ListingEditReducer";
 
 
 type PickerItemPropsType = {

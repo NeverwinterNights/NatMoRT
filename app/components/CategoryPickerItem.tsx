@@ -1,7 +1,8 @@
 import {Pressable, StyleSheet, View} from 'react-native';
 import {Icon} from "./Icon";
 import {AppText} from "./AppText";
-import {CategoryType} from "../screens/ListingEditScreen";
+import {CategoryType} from "../store/ListingEditReducer";
+
 
 
 
@@ -28,10 +29,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingVertical: 15,
         alignItems: "center",
-        width: "33%"
+        width: "33%",
+        overflow: "hidden"
     },
     label: {
         marginTop: 5,
-        textAlign: "center"
+        textAlign: "center",
+
     }
 });

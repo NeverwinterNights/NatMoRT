@@ -1,26 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from "react-native-gesture-handler";
-import {Screen} from "./app/components/Screen";
-import {AppPicker} from "./app/components/AppPicker";
-import {LoginScreen} from "./app/screens/LoginScreen";
 import {ListingEditScreen} from "./app/screens/ListingEditScreen";
-import {ListItem} from "./app/components/ListItem";
-import {ListingsScreen} from "./app/screens/ListingsScreen";
-import {ListingDetailsScreen} from "./app/screens/ListingDetailsScreen";
-import {MessagesScreen} from "./app/screens/MessagesScreen";
+import {Provider} from "react-redux";
+import {store} from "./app/store/store";
 
-
-// export type CategoryType = {
-//     label: string
-//     value: number
-// }
-//
-// const categories:CategoryType[] = [
-//     { label:"Furniture", value:1},
-//     { label:"Sport", value:2},
-//     { label:"Goods", value:3},
-// ]
 
 export default function App() {
 
@@ -30,10 +14,12 @@ export default function App() {
     return (
         // <GestureHandlerRootView onLayout={onLayoutRootView} style={{flex: 1}}>
         <GestureHandlerRootView style={{flex: 1}}>
-            {/*<Screen>*/}
-            {/*    <AppPicker selectedItem={category} onSelectItem={(item: any)=> setCategory(item)} items={categories} icon={"apps"} placeholder={"Category"}/>*/}
-            {/*</Screen>*/}
-            <ListingsScreen/>
+            <Provider store={store}>
+                {/*<Screen>*/}
+                {/*    <AppPicker selectedItem={category} onSelectItem={(item: any)=> setCategory(item)} items={categories} icon={"apps"} placeholder={"Category"}/>*/}
+                {/*</Screen>*/}
+                <ListingEditScreen/>
+            </Provider>
         </GestureHandlerRootView>
     );
 }

@@ -5,7 +5,8 @@ import {AppPicker} from "../AppPicker";
 
 import {ErrorMessages} from "./ErrorMessages";
 import { CategoryPickerItemPropsType } from "../CategoryPickerItem";
-import { CategoryType } from "../../screens/ListingEditScreen";
+import { CategoryType } from "../../store/ListingEditReducer";
+
 
 
 

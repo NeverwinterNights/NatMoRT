@@ -1948,7 +1948,7 @@ Lockfile:
     integrity sha512-DykbNHxuXQwUDRv5ibc2b0x7uw7wmwOGLBUd5RmaQ5z8Lhx19vwvKV+FAsM5rEA6dEcHxX+/Ad5s9eF2k2bB+w==
     dependencies:
       colorette "^1.0.7"
-      slice-ansi "^2.0.0"
+      listingEditReducer-ansi "^2.0.0"
       strip-ansi "^5.0.0"
   
   ansi-regex@^4.1.0:
@@ -6013,9 +6013,9 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
     integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
   
-  slice-ansi@^2.0.0:
+  listingEditReducer-ansi@^2.0.0:
     version "2.1.0"
-    resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-2.1.0.tgz#cacd7693461a637a5788d92a7dd4fba068e81636"
+    resolved "https://registry.yarnpkg.com/listingEditReducer-ansi/-/listingEditReducer-ansi-2.1.0.tgz#cacd7693461a637a5788d92a7dd4fba068e81636"
     integrity sha512-Qu+VC3EwYLldKa1fCxuuvULvSJOKEgk9pi8dZeCVK7TqBfUNTH4sFkk4joj8afVSfAYgJoSOetjx9QWOJ5mYoQ==
     dependencies:
       ansi-styles "^3.2.0"

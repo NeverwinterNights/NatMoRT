@@ -4,11 +4,11 @@ import {MaterialCommunityIcons} from "@expo/vector-icons";
 import colors from "../config/colors";
 import {AppText} from "./AppText";
 import AppButton from "./AppButton";
-import {Screen} from "./Screen";
 
 import {PickerItem} from "./PickerItem";
 import {CategoryPickerItemPropsType} from "./CategoryPickerItem";
-import {CategoryType} from "../screens/ListingEditScreen";
+import {CategoryType} from "../store/ListingEditReducer";
+
 
 type  AppPickerPropsType = {
     numbersOfColumn?: number
@@ -27,10 +27,10 @@ export const AppPicker = ({
                               selectedItem,
                               onSelectItem,
                               items,
-                              numbersOfColumn=1,
+                              numbersOfColumn = 1,
                               placeholder,
                               width = "100%",
-                              PickerItemComponent=PickerItem,
+                              PickerItemComponent = PickerItem,
                               ...restProps
                           }: AppPickerPropsType & TextInputProps) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -45,7 +45,7 @@ export const AppPicker = ({
                 </View>
             </TouchableWithoutFeedback>
             <Modal visible={modalVisible} animationType={"slide"}>
-                <View style={{paddingHorizontal:10}}>
+                <View style={{paddingHorizontal: 10}}>
                     <AppButton title={"Close"} onPress={() => setModalVisible(false)}/>
                     <FlatList
                         data={items}
