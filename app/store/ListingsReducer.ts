@@ -2,14 +2,30 @@ import {createAction, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 // import {RootState} from "./store";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import {ImageSourcePropType} from "react-native";
+import {ImagesData} from "../screens/ListingsScreen";
 
 
-type ListingType = {
-    id: number
-    title: string
-    price: number
-    image: ImageSourcePropType
+// type ListingType = {
+//     id: number
+//     title: string
+//     price: number
+//     image: ImageSourcePropType
+// }
+
+export type  ListingType = {
+    id: number,
+    title: string,
+    price: number,
+    images: ImageSourcePropType
+    // images: ImagesData[]
+    categoryId: number
+    userId: number
+    location: {
+        latitude: number,
+        longitude: number
+    }
 }
+
 
 
 const listings:ListingType[] = [
@@ -17,14 +33,14 @@ const listings:ListingType[] = [
         id: 1,
         title: "Red Jacket for sale",
         price: 100,
-        image: require("../assets/jacket.jpg")
-    },
+        images: require("../assets/jacket.jpg")
+    } as ListingType,
     {
         id: 2,
         title: "Couch in great condition",
         price: 600,
-        image: require("../assets/couch.jpg")
-    }
+        images: require("../assets/couch.jpg")
+    } as ListingType
 ]
 
 

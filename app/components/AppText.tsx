@@ -1,7 +1,8 @@
 import {Platform, StyleProp, StyleSheet, Text, TextProps, TextStyle} from 'react-native';
+import {ReactNode} from "react";
 
 type AppTextPropsType = {
-    children: string
+    children: number | string | ReactNode
      style?: StyleProp<TextStyle>
 }
 

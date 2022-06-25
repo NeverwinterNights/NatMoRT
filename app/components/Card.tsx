@@ -1,4 +1,4 @@
-import {Image, ImageSourcePropType, StyleSheet, View} from 'react-native';
+import {Image, ImageSourcePropType, Pressable, StyleSheet, View} from 'react-native';
 import colors from "../config/colors";
 import {AppText} from "./AppText";
 
@@ -6,17 +6,24 @@ type CardPropsType = {
     title: string
     subTitle: string
     image: ImageSourcePropType
+    onPress: () => void
 }
 
-export const Card = ({title, subTitle, image}: CardPropsType) => {
+export const Card = ({title, subTitle, image, onPress}: CardPropsType) => {
+
+    const x = () => {
+        onPress
+    }
     return (
-        <View style={styles.card}>
-            <Image style={styles.image} source={image}/>
-            <View style={styles.detailContainer}>
-            <AppText style={styles.title}>{title}</AppText>
-            <AppText style={styles.subTitle}>{subTitle}</AppText>
+        <Pressable onPress={onPress}>
+            <View style={styles.card}>
+                <Image style={styles.image} source={image}/>
+                <View style={styles.detailContainer}>
+                    <AppText style={styles.title}>{title}</AppText>
+                    <AppText style={styles.subTitle}>{subTitle}</AppText>
+                </View>
             </View>
-        </View>
+        </Pressable>
     );
 };
 
@@ -28,8 +35,8 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     image: {
-        width:"100%",
-        height:200,
+        width: "100%",
+        height: 200,
     },
     detailContainer: {
         padding: 20

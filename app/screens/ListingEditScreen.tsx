@@ -10,6 +10,9 @@ import {CategoryPickerItem} from '../components/CategoryPickerItem';
 import MaterialCommunityIcons from '@expo/vector-icons/build/MaterialCommunityIcons';
 import {useAppSelector} from "../store/store";
 import {FormImagePicker} from "../components/form/FormImagePicker";
+import * as Location from "expo-location";
+import { useLocation } from '../../hooks/useLocation';
+
 
 
 
@@ -27,6 +30,8 @@ const validationSchema = Yup.object().shape({
 
 
 export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
+
+    const location = useLocation()
 
     const categories = useAppSelector(state => state.listingEditScreen.categories)
     const images = useAppSelector(state => state.listingEditScreen.images)

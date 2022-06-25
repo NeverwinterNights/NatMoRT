@@ -18,21 +18,22 @@ type  FormImagePickerPropsType = {
 
 export const FormImagePicker = ({name}: FormImagePickerPropsType) => {
     const {errors, setFieldValue, touched, values} = useFormikContext<FormData>();
-    const imageUris = values[name] as unknown as [];
+    // const imageUris = values[name] as unknown as [];
 
 
-    const handleAdd = (uri: string) => {
-        setFieldValue(name as string, [...imageUris, uri])
-    }
+    // const handleAdd = (uri: string) => {
+    //     setFieldValue(name as string, [...imageUris, uri])
+    // }
 
-    const handleRemove = (uri: string) => {
-        setFieldValue(name as string, imageUris.filter((imageUri) => imageUri != uri))
-    }
+    // const handleRemove = (uri: string) => {
+    //     setFieldValue(name as string, imageUris.filter((imageUri) => imageUri != uri))
+    // }
 
     return (
         <>
-            <ImageInputList imageUris={imageUris} onRemoveImage={handleRemove}
-                            onAddImage={handleAdd}/>
+            {/*<ImageInputList imageUris={imageUris} onRemoveImage={handleRemove}*/}
+            {/*                onAddImage={handleAdd}/>*/}
+            <ImageInputList />
             <ErrorMessages error={errors[name]}/>
 
         </>

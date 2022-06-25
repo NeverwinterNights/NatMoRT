@@ -72,7 +72,10 @@ type initialStateType = {
     images: string[]
 }
 
+
 export const addImagesAC = createAction<{uri: string}>("listingEdit/addImagesAC")
+export const removeImagesAC = createAction<{uri: string}>("listingEdit/removeImagesAC")
+
 
 // const initialState: CategoryType[]  = categories
 const initialState: initialStateType = {
@@ -88,6 +91,9 @@ const slice = createSlice({
         builder
             .addCase(addImagesAC, (state, action) => {
                 state.images = [...state.images, action.payload.uri]
+            })
+            .addCase(removeImagesAC, (state, action) => {
+                state.images = state.images.filter(imageUri => imageUri != action.payload.uri)
             })
     },
 })
