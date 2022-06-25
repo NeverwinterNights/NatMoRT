@@ -3,27 +3,40 @@ import {AppText} from "../components/AppText";
 import colors from "../config/colors";
 import {ListItem} from "../components/ListItem";
 import {ListingDetailsScreenProps} from "../navigation/types";
-
-
+import GestureRecognizer from 'react-native-swipe-gestures'
+import {useNavigation} from "@react-navigation/native";
 
 export const ListingDetailsScreen = ({route}: ListingDetailsScreenProps) => {
     const {item} = route.params
-    return (
-        <View style={styles.container}>
-            <Image style={styles.image} source={item.images}/>
-            <View style={styles.detailContainer}>
-                <AppText style={styles.title}>{item.title}</AppText>
-                <AppText style={styles.subTitle}>${item.price}</AppText>
-                <View style={{marginVertical: 20}}>
-                    <ListItem
-                        image={require("./../assets/mosh.jpg")}
-                        title={"Pavel Cardash"}
-                        subTitle={"10 Listings"}
+    const useAppNavigation = () => useNavigation()
 
-                    />
+    const navigation = useAppNavigation()
+    return (
+        <GestureRecognizer
+            style={{flex: 1}}
+            config={{velocityThreshold: 0.01, directionalOffsetThreshold: 30}}
+            onSwipe={(direction, state) => {
+                if (direction === 'SWIPE_DOWN') {
+                    navigation.goBack()
+                }
+            }}
+        >
+            <View style={styles.container}>
+                <Image style={styles.image} source={item.images}/>
+                <View style={styles.detailContainer}>
+                    <AppText style={styles.title}>{item.title}</AppText>
+                    <AppText style={styles.subTitle}>${item.price}</AppText>
+                    <View style={{marginVertical: 20}}>
+                        <ListItem
+                            image={require("./../assets/mosh.jpg")}
+                            title={"Pavel Cardash"}
+                            subTitle={"10 Listings"}
+
+                        />
+                    </View>
                 </View>
             </View>
-        </View>
+        </GestureRecognizer>
     );
 };
 
