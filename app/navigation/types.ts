@@ -1,8 +1,10 @@
 import {NavigationProp, NavigatorScreenParams} from "@react-navigation/native";
 import {ListingsNavigator} from "./ListingsNavigator";
-import {ListingType} from "../screens/ListingsScreen";
+
 import {CategoryType} from "../store/ListingEditReducer";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {AccountNavigator} from "./AccountNavigator";
+import {ListingType} from "../store/ListingsReducer";
 
 
 export type AuthNavigatorStackParamList = {
@@ -15,14 +17,20 @@ export type AuthNavigatorStackParamList = {
 export type ListingsNavigatorStackParamList = {
     Listings: undefined
     ListingDetails: { item: ListingType }
-
 }
+
+
+export type AccountNavigatorStackParamList = {
+    AccountData: undefined
+    Messages: undefined
+}
+
 
 
 export type RootTabParamList = {
     Main: NavigatorScreenParams<ListingsNavigatorStackParamList>;
     ListingEdit: undefined
-    Account: undefined
+    Account: NavigatorScreenParams<AccountNavigatorStackParamList>;
 }
 
 

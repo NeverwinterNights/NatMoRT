@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import * as Yup from "yup";
 import {AppForm} from '../components/form/AppForm';
@@ -7,15 +7,27 @@ import {Screen} from "../components/Screen";
 import {AppFormField} from "../components/form/AppFormField";
 import {AppFormPicker} from "../components/form/AppFormPicker";
 import {CategoryPickerItem} from '../components/CategoryPickerItem';
-import MaterialCommunityIcons from '@expo/vector-icons/build/MaterialCommunityIcons';
-import {useAppSelector} from "../store/store";
+import {useAppDispatch, useAppSelector} from "../store/store";
 import {FormImagePicker} from "../components/form/FormImagePicker";
-import * as Location from "expo-location";
-import { useLocation } from '../../hooks/useLocation';
+import {useLocation} from '../../hooks/useLocation';
+import axios from "axios";
+import {addListingsTh} from "../store/ListingsReducer";
 
 
+export type ListingFromForm = {
+    category: { value: string }
+    description: string
+    images: []
+    title: string
+    price: string
+}
 
 
+export type LocationType = {
+    latitude: number
+    longitude: number
+
+}
 
 
 type ListingEditScreenPropsType = {}
@@ -30,11 +42,20 @@ const validationSchema = Yup.object().shape({
 
 
 export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
-
+    const dispatch = useAppDispatch()
     const location = useLocation()
 
     const categories = useAppSelector(state => state.listingEditScreen.categories)
-    const images = useAppSelector(state => state.listingEditScreen.images)
+    const imagesData = useAppSelector(state => state.listingEditScreen.images)
+
+
+
+
+
+    const handleSubmit = (listing: any) => {
+
+         dispatch(addListingsTh({...listing, location}))
+    }
 
 
     return (
@@ -45,12 +66,12 @@ export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
                     price: "",
                     description: "",
                     category: null,
-                    images: images
+                    images: imagesData
                 }}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={handleSubmit}
                 validationSchema={validationSchema}
             >
-               <FormImagePicker name={"images"}/>
+                <FormImagePicker name={"images"}/>
                 <AppFormField maxLength={255} name="title" placeholder="Title"/>
                 <AppFormField
                     keyboardType="numeric"

@@ -2,13 +2,13 @@ import {Image, StyleSheet, View} from 'react-native';
 import {AppText} from "../components/AppText";
 import colors from "../config/colors";
 import {ListItem} from "../components/ListItem";
-import {ListingDetailsScreenProps} from "../navigation/types";
+import {ListingDetailsScreenProps, NavigationTabType} from "../navigation/types";
 import GestureRecognizer from 'react-native-swipe-gestures'
 import {useNavigation} from "@react-navigation/native";
 
 export const ListingDetailsScreen = ({route}: ListingDetailsScreenProps) => {
     const {item} = route.params
-    const useAppNavigation = () => useNavigation()
+    const useAppNavigation = () => useNavigation<NavigationTabType>()
 
     const navigation = useAppNavigation()
     return (
@@ -22,7 +22,7 @@ export const ListingDetailsScreen = ({route}: ListingDetailsScreenProps) => {
             }}
         >
             <View style={styles.container}>
-                <Image style={styles.image} source={item.images}/>
+                <Image style={styles.image} source={{uri:item.images[0].url}}/>
                 <View style={styles.detailContainer}>
                     <AppText style={styles.title}>{item.title}</AppText>
                     <AppText style={styles.subTitle}>${item.price}</AppText>

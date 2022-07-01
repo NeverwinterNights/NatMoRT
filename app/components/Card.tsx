@@ -5,19 +5,18 @@ import {AppText} from "./AppText";
 type CardPropsType = {
     title: string
     subTitle: string
-    image: ImageSourcePropType
+    // image: ImageSourcePropType
+    image: string
     onPress: () => void
 }
 
 export const Card = ({title, subTitle, image, onPress}: CardPropsType) => {
 
-    const x = () => {
-        onPress
-    }
+
     return (
         <Pressable onPress={onPress}>
             <View style={styles.card}>
-                <Image style={styles.image} source={image}/>
+                <Image style={styles.image} source={{uri:image}}/>
                 <View style={styles.detailContainer}>
                     <AppText style={styles.title}>{title}</AppText>
                     <AppText style={styles.subTitle}>{subTitle}</AppText>

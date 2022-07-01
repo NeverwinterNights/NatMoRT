@@ -9,6 +9,8 @@ import {Screen} from "../components/Screen";
 import {ListItemSeparator} from "../components/ListItemSeparator";
 import {Icon} from "../components/Icon";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {useNavigation} from "@react-navigation/native";
+import {NavigationTabType} from "../navigation/types";
 
 type menuItemType = {
     title: string
@@ -16,7 +18,7 @@ type menuItemType = {
         name: keyof typeof MaterialCommunityIcons.glyphMap
         backgroundColor: string
     },
-    targetScreen: "MessagesScreen"
+    targetScreen: "Messages"
 }
 
 
@@ -27,7 +29,7 @@ const menuItems: menuItemType[] = [
             name: "format-list-bulleted",
             backgroundColor: colors.primary,
         },
-        targetScreen: "MessagesScreen"
+        targetScreen: "Messages"
     },
     {
         title: "My Messages",
@@ -35,16 +37,21 @@ const menuItems: menuItemType[] = [
             name: "email",
             backgroundColor: colors.secondary,
         },
-        targetScreen: "MessagesScreen"
+        targetScreen: "Messages"
     },
 ];
 
 function AccountScreen() {
+
+    const useAppNavigation = () => useNavigation<NavigationTabType>()
+
+    const navigation = useAppNavigation()
+
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <ListItem
-                    title="Mosh Hamedani"
+                    title="Pavel Cardash"
                     subTitle="programmingwithmosh@gmail.com"
                     image={require("../assets/mosh.jpg")}
                 />
@@ -63,6 +70,7 @@ function AccountScreen() {
                                     backgroundColor={item.icon.backgroundColor}
                                 />
                             }
+                            onPress={()=> navigation.navigate("Account", {screen:item.targetScreen})}
                         />
                     )}
                 />

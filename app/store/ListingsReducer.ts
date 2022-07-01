@@ -1,8 +1,8 @@
 import {createAction, createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 // import {RootState} from "./store";
-import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
-import {ImageSourcePropType} from "react-native";
-import {ImagesData} from "../screens/ListingsScreen";
+import {RootState} from "./store";
+import {apiRequests, ListingDataType} from "../../api/client";
+import {setLoadingAC} from "./AppReducer";
 
 
 // type ListingType = {
@@ -12,12 +12,17 @@ import {ImagesData} from "../screens/ListingsScreen";
 //     image: ImageSourcePropType
 // }
 
+export type ImagesData = {
+    url: string,
+    thumbnailUrl: string
+}
+
 export type  ListingType = {
     id: number,
     title: string,
     price: number,
-    images: ImageSourcePropType
-    // images: ImagesData[]
+    //images: ImageSourcePropType
+    images: ImagesData[]
     categoryId: number
     userId: number
     location: {
@@ -27,38 +32,83 @@ export type  ListingType = {
 }
 
 
+const listings: ListingType[] = []
 
-const listings:ListingType[] = [
-    {
-        id: 1,
-        title: "Red Jacket for sale",
-        price: 100,
-        images: require("../assets/jacket.jpg")
-    } as ListingType,
-    {
-        id: 2,
-        title: "Couch in great condition",
-        price: 600,
-        images: require("../assets/couch.jpg")
-    } as ListingType
-]
+type initialStateType = {
+    listings: ListingType[] | undefined
+    error: string
+}
 
 
-//export const addListingsAC = createAction<{}>("listingEdit/addListings")
+export const getAllListingsTh = createAsyncThunk<ListingType[] | undefined, void, { state: RootState }>("listings/getAllListingsTh", async (param, {
+    dispatch,
+    rejectWithValue
+}) => {
+    try {
+        dispatch(setLoadingAC(true))
+        const result = await apiRequests.getListings()
+        dispatch(setLoadingAC(false))
+        return result.data
+    } catch (error) {
+        dispatch(setLoadingAC(false))
+        return rejectWithValue(error.message)
+    }
+})
 
-const initialState: ListingType[]  = listings
+// <ListingType[] | undefined, void, { state: RootState }>
+export const addListingsTh = createAsyncThunk("listings/addListingsTh", async (listing: ListingDataType, {
+    dispatch,
+    rejectWithValue
+}) => {
+    try {
+        // dispatch(setLoadingAC(true))
+        // const result = await apiRequests.addListings(param.listing)
+        const result = await apiRequests.addListings(listing)
+
+        // const result = await apiRequests.getListings()
+        // dispatch(setLoadingAC(false))
+        // return result.data
+    } catch (error) {
+        dispatch(setLoadingAC(false))
+        alert("Cant save the listings")
+        return rejectWithValue(error.message)
+    }
+})
+
+// const initialState: ListingType[] = listings
+const initialState: initialStateType = {
+    listings,
+    error: ""
+}
+
+export const setErrorAC = createAction<string>("listings/setErrorAC")
+
 
 const slice = createSlice({
     name: "listings",
     initialState,
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: (builder) => {
+        builder
+            .addCase(getAllListingsTh.fulfilled, (state, action) => {
+                state.error = ""
+                state.listings = action.payload
+            })
+            .addCase(getAllListingsTh.rejected, (state, action) => {
+                state.error = action.payload as string
 
+            })
+            // .addCase(addListingsTh.fulfilled, (state, action) => {
+            //     console.log("fulfilled")
+            //     state.listings = action.payload
+            //
+            // })
+        // .addCase(addListingsTh.rejected, (state, action) => {
+        //     state.error = action.payload as string
+        //
+        // })
     },
 })
-
 
 
 export const listingsScreen = slice.reducer

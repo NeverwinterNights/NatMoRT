@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, ImageSourcePropType, StyleSheet} from 'react-native';
+import {FlatList, ImageSourcePropType, StyleSheet, View} from 'react-native';
 import {ListItem} from "../components/ListItem";
 import {Screen} from "../components/Screen";
 import {ListItemSeparator} from "../components/ListItemSeparator";
@@ -38,7 +38,7 @@ export const MessagesScreen = ({}: MessagesScreenPropsType) => {
     };
 
     return (
-        <Screen>
+        <View>
             <FlatList data={messages} keyExtractor={(item) => item.id.toString()} renderItem={({item}) =>
                 <ListItem
                     onPress={() => console.log()}
@@ -74,7 +74,7 @@ export const MessagesScreen = ({}: MessagesScreenPropsType) => {
                           ]);
                       }}
             />
-        </Screen>
+        </View>
     );
 };
 

@@ -12,30 +12,25 @@ import {addImagesAC, removeImagesAC} from "../store/ListingEditReducer";
 // }
 type  ImageInputListPropsType = {
 
-    // onRemoveImage: (uri: string) => void
-    // onAddImage: (uri: string) => void
+    onRemoveImg: (uri: string) => void
+    onAddImg: (uri: string) => void
 }
 
 // export const ImageInputList = ({imageUris = [], onRemoveImage, onAddImage}: ImageInputListPropsType) => {
-export const ImageInputList = ({}: ImageInputListPropsType) => {
+export const ImageInputList = ({onRemoveImg, onAddImg}: ImageInputListPropsType) => {
     const scrollView = useRef<ScrollView>(null);
-    const images = useAppSelector(state => state.listingEditScreen.images)
+    const imagesData = useAppSelector(state => state.listingEditScreen.images)
     const dispatch = useAppDispatch()
 
 
-    // const scrollEnd = () => {
-    //   if (scrollView && scrollView.current) {
-    //       scrollView.current.scrollToEnd({animated: true})
-    //   }
-    //
-    // }
 
-    // const scrollRef = React.createRef<ScrollView>();
 
     const onAddImage = (uri: string) => {
+        onAddImg(uri)
         dispatch(addImagesAC({uri}))
     }
     const onRemoveImage = (uri: string) => {
+        onRemoveImg(uri)
         dispatch(removeImagesAC({uri}))
     }
 
@@ -46,7 +41,7 @@ export const ImageInputList = ({}: ImageInputListPropsType) => {
             <ScrollView ref={scrollView} showsHorizontalScrollIndicator={false} horizontal
                         onContentSizeChange={() => scrollView.current?.scrollToEnd({animated: true})}>
                 <View style={styles.container}>
-                    {images.map((uri: string) =>
+                    {imagesData.map((uri: string) =>
                         <View key={uri} style={styles.image}>
                             <ImageInput imageUri={uri} onChangeImage={() => onRemoveImage(uri)}/>
                         </View>

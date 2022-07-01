@@ -3,10 +3,12 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {listingEditScreen} from "./ListingEditReducer";
 import thunkMiddleware from 'redux-thunk'
 import {listingsScreen} from "./ListingsReducer";
+import {appReducer} from "./AppReducer";
 
 const rootReducer = combineReducers({
     listingEditScreen: listingEditScreen,
-    listingsScreen:listingsScreen
+    listingsScreen:listingsScreen,
+    appReducer:appReducer
 })
 
 
