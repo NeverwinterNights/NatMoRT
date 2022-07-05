@@ -35,7 +35,7 @@ export const FormImagePicker = ({name}: FormImagePickerPropsType) => {
             {/*<ImageInputList />*/}
             <ImageInputList  onRemoveImg={handleRemove}
                              onAddImg={handleAdd}/>
-            <ErrorMessages error={errors[name]}/>
+            {touched[name] && <ErrorMessages error={errors[name]}/>}
 
         </>
     );

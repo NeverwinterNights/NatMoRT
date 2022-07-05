@@ -2,13 +2,17 @@ import React from 'react';
 import {Keyboard, StyleSheet, Text, View} from 'react-native';
 import AppButton from "../AppButton";
 import {useFormikContext} from "formik";
+import jwtDecode from "jwt-decode";
+
+
 
 type SubmitButtonPropsType = {
     title: string
 }
 
 export const SubmitButton = ({title}:SubmitButtonPropsType) => {
-    const {handleSubmit} = useFormikContext<FormData>()
+    const {handleSubmit, values} = useFormikContext()
+
 
     const onLoginButtonHandler = () => {
         handleSubmit()
@@ -22,6 +26,6 @@ export const SubmitButton = ({title}:SubmitButtonPropsType) => {
 
 const styles = StyleSheet.create({
   container: {
-  
+
   }
 });

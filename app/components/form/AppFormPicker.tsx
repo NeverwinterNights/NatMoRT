@@ -25,7 +25,7 @@ type  AppFormPickerPropsType = {
 }
 
 export const AppFormPicker = ({items, numbersOfColumn, width, PickerItemComponent, name, placeholder}: AppFormPickerPropsType) => {
-    const {errors, setFieldValue, values} = useFormikContext<FormData>();
+    const {errors, touched, setFieldValue, values} = useFormikContext<FormData>();
     return (
         <>
             <AppPicker
@@ -37,7 +37,7 @@ export const AppFormPicker = ({items, numbersOfColumn, width, PickerItemComponen
                 placeholder={placeholder}
                 selectedItem={values[name] as unknown as CategoryType}
             />
-            <ErrorMessages error={errors[name]}/>
+            {touched[name] && <ErrorMessages error={errors[name]}/>}
         </>
     );
 };

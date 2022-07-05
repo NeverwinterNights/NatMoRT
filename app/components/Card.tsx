@@ -1,6 +1,7 @@
-import {Image, ImageSourcePropType, Pressable, StyleSheet, View} from 'react-native';
+import { ImageSourcePropType, Pressable, StyleSheet, View} from 'react-native';
 import colors from "../config/colors";
 import {AppText} from "./AppText";
+import {Image} from "react-native-expo-image-cache"
 
 type CardPropsType = {
     title: string
@@ -8,15 +9,17 @@ type CardPropsType = {
     // image: ImageSourcePropType
     image: string
     onPress: () => void
+    thumbnailUrl: string
 }
 
-export const Card = ({title, subTitle, image, onPress}: CardPropsType) => {
+export const Card = ({title, subTitle, image, onPress, thumbnailUrl}: CardPropsType) => {
 
 
     return (
         <Pressable onPress={onPress}>
             <View style={styles.card}>
-                <Image style={styles.image} source={{uri:image}}/>
+                {/*<Image style={styles.image} source={{uri:image}}/>*/}
+                <Image style={styles.image}  tint={"light"} preview={{uri:thumbnailUrl}} uri={image}/>
                 <View style={styles.detailContainer}>
                     <AppText style={styles.title}>{title}</AppText>
                     <AppText style={styles.subTitle}>{subTitle}</AppText>

@@ -1,15 +1,23 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {Screen} from "../components/Screen";
-import {Formik} from "formik";
+import {FormikValues} from "formik";
 import * as Yup from "yup"
 import {AppFormField} from "../components/form/AppFormField";
 import {SubmitButton} from "../components/form/SubmitButton";
 import {AppForm} from "../components/form/AppForm";
+import {useAppDispatch, useAppSelector} from "../store/store";
+import {authTh} from "../store/AppReducer";
+import {ErrorMessages} from "../components/form/ErrorMessages";
+import {storeToken} from "../../storage/storage";
+
 
 type LoginScreenPropsType = {}
 
 export const LoginScreen = ({}: LoginScreenPropsType) => {
+    const dispatch = useAppDispatch()
+    const loginError = useAppSelector(state => state.appReducer.loginError)
+    const token = useAppSelector(state => state.appReducer.authToken)
 
 
     const validationSchema = Yup.object().shape({
@@ -18,14 +26,19 @@ export const LoginScreen = ({}: LoginScreenPropsType) => {
     })
 
 
+    const handleSubmit = async (authData: FormikValues) => {
+        dispatch(authTh({authData}))
+    }
+
     return (
         <Screen style={styles.container}>
             <Image style={styles.logo} source={require("../assets/logo-red.png")}/>
             <AppForm
                 initialValues={{email: "", password: ""}}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={handleSubmit}
                 validationSchema={validationSchema}
             >
+                <ErrorMessages error={loginError}/>
                 <AppFormField
                     placeholder={"Email"}
                     name={"email"}
@@ -35,7 +48,7 @@ export const LoginScreen = ({}: LoginScreenPropsType) => {
                     keyboardType={"email-address"}
                 />
                 <AppFormField
-                    name={"Password"}
+                    name={"password"}
                     placeholder={"Password"}
                     icon={"lock"}
                     autoCapitalize={"none"}

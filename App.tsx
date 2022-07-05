@@ -2,15 +2,17 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {Provider} from "react-redux";
-import {store} from "./app/store/store";
+import {store, useAppSelector} from "./app/store/store";
 import {AuthNavigator} from "./app/navigation/AuthNavigator";
-import { NavigationContainer } from '@react-navigation/native';
-import { myTheme } from './app/navigation/NavigationTheme';
-import { AppNavigator } from './app/navigation/AppNavigator';
-
+import {NavigationContainer} from '@react-navigation/native';
+import {myTheme} from './app/navigation/NavigationTheme';
+import {OfflineNotice} from "./app/components/OfflineNotice";
+import {AppNavigator} from "./app/navigation/AppNavigator";
+import {Main} from "./app/components/Main";
 
 
 export default function App() {
+
 
     // const [category, setCategory] = useState<CategoryType>(categories[0]);
 
@@ -18,12 +20,12 @@ export default function App() {
     return (
         // <GestureHandlerRootView onLayout={onLayoutRootView} style={{flex: 1}}>
         <GestureHandlerRootView style={{flex: 1}}>
+            <OfflineNotice/>
             <Provider store={store}>
                 <NavigationContainer theme={myTheme}>
-                    {/*<Screen>*/}
-                    {/*    <AppPicker selectedItem={category} onSelectItem={(item: any)=> setCategory(item)} items={categories} icon={"apps"} placeholder={"Category"}/>*/}
-                    {/*</Screen>*/}
-                    <AppNavigator/>
+                   <Main/>
+                    {/*<AppNavigator/>*/}
+                    {/*<AuthNavigator/>*/}
                 </NavigationContainer>
             </Provider>
         </GestureHandlerRootView>

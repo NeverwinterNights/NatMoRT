@@ -7,7 +7,7 @@ import colors from "../config/colors";
 const Stack = createNativeStackNavigator()
 
 export const AuthNavigator = () => (
-    <Stack.Navigator screenOptions={{headerTitleAlign:"center", headerTintColor:colors.primary}}>
+    <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="Register"  component={RegisterScreen}

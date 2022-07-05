@@ -15,14 +15,20 @@ export type ListingDataType = {
 
 const instance = axios.create({
     baseURL: "http://192.168.100.229:8000/api",
-    timeout: 3000
+    timeout: 500,
+    headers: {
+        "Content-Type": "multipart/form-data",
+        "cache-control": "no-cache",
+
+    },
 })
+
 
 export const apiRequests = {
     getListings() {
         return instance.get<ListingType[]>("/listings")
     },
-    addListings(listing: ListingDataType) {
+    addListings(listing: ListingDataType, onUploadProgress: (progress: number) => void) {
         const data = new FormData()
         data.append("title", listing.title)
         data.append("price", listing.price)
@@ -38,6 +44,20 @@ export const apiRequests = {
         if (listing.location) {
             data.append("location", JSON.stringify(listing.location))
         }
-         return instance.post("/listings", data )
-}
+        // return instance.post("/listings", data)
+        return instance.post("/listings", data, {
+            onUploadProgress: (progress) => {
+                onUploadProgress(progress.loaded / progress.total)
+
+            }
+        })
+    },
+    login(email: string, password: string) {
+        return instance.post("/auth", {email, password}, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+
+    }
 }

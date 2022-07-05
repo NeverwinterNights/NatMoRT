@@ -11,6 +11,9 @@ import {Icon} from "../components/Icon";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native";
 import {NavigationTabType} from "../navigation/types";
+import {useAppDispatch, useAppSelector} from "../store/store";
+import {setUserAC, UserType} from "../store/AppReducer";
+import {removeToken} from "../../storage/storage";
 
 type menuItemType = {
     title: string
@@ -44,15 +47,23 @@ const menuItems: menuItemType[] = [
 function AccountScreen() {
 
     const useAppNavigation = () => useNavigation<NavigationTabType>()
+    const user = useAppSelector(state => state.appReducer.user)
+    const dispatch = useAppDispatch()
+
 
     const navigation = useAppNavigation()
+
+    const logOutHandler = () => {
+        dispatch(setUserAC({} as UserType))
+        removeToken()
+    }
 
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <ListItem
-                    title="Pavel Cardash"
-                    subTitle="programmingwithmosh@gmail.com"
+                    title={user.name}
+                    subTitle={user.email}
                     image={require("../assets/mosh.jpg")}
                 />
             </View>
@@ -70,7 +81,7 @@ function AccountScreen() {
                                     backgroundColor={item.icon.backgroundColor}
                                 />
                             }
-                            onPress={()=> navigation.navigate("Account", {screen:item.targetScreen})}
+                            onPress={() => navigation.navigate("Account", {screen: item.targetScreen})}
                         />
                     )}
                 />
@@ -78,6 +89,7 @@ function AccountScreen() {
             <ListItem
                 title="Log Out"
                 IconComponent={<Icon name="logout" backgroundColor="#ffe66d"/>}
+                onPress={logOutHandler}
             />
         </Screen>
     );

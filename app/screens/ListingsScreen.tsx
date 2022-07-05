@@ -46,7 +46,10 @@ export const ListingsScreen = ({}: ListingsScreenPropsType) => {
             <ActivityIndic visible={isLoading}/>
             <FlatList data={listings} showsVerticalScrollIndicator={false}
                       keyExtractor={(listing) => listing.id.toString()} renderItem={({item}) =>
-                <Card title={item.title} subTitle={"$" + item.price} image={item.images[0].url}
+                <Card thumbnailUrl={item.images[0].thumbnailUrl}
+                      title={item.title}
+                      subTitle={"$" + item.price}
+                      image={item.images[0].url}
                     // onPress={() => navigation.navigate("ListingDetails", {item})}/>
                       onPress={() => navigation.navigate("Main", {screen: "ListingDetails", params: {item}})}/>
             }/>

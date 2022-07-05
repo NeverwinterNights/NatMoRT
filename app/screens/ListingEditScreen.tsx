@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import * as Yup from "yup";
 import {AppForm} from '../components/form/AppForm';
@@ -10,23 +10,14 @@ import {CategoryPickerItem} from '../components/CategoryPickerItem';
 import {useAppDispatch, useAppSelector} from "../store/store";
 import {FormImagePicker} from "../components/form/FormImagePicker";
 import {useLocation} from '../../hooks/useLocation';
-import axios from "axios";
 import {addListingsTh} from "../store/ListingsReducer";
-
-
-export type ListingFromForm = {
-    category: { value: string }
-    description: string
-    images: []
-    title: string
-    price: string
-}
+import {UploadScreen} from "./UploadScreen";
+import {FormikHelpers} from "formik";
 
 
 export type LocationType = {
     latitude: number
     longitude: number
-
 }
 
 
@@ -45,21 +36,33 @@ export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
     const dispatch = useAppDispatch()
     const location = useLocation()
 
+    const [uploadVisible, setUploadVisible] = useState<boolean>(false);
+    const [progress, setProgress] = useState<number>(0);
+
+
     const categories = useAppSelector(state => state.listingEditScreen.categories)
     const imagesData = useAppSelector(state => state.listingEditScreen.images)
+    const error: string = useAppSelector(state => state.listingsScreen.error)
 
 
-
-
-
-    const handleSubmit = (listing: any) => {
-
-         dispatch(addListingsTh({...listing, location}))
+    const handleSubmit = (listing: any, {resetForm}: FormikHelpers<any>) => {
+        setProgress(0)
+        setUploadVisible(true)
+        dispatch(addListingsTh({
+                listing: {...listing, location},
+                onUploadProgress: (progress: number) => setProgress(progress)
+            },
+        ))
+        if (!error) {
+            resetForm()
+        }
     }
-
 
     return (
         <Screen style={styles.container}>
+            <UploadScreen onDone={() => setUploadVisible(false)} progress={progress} visible={uploadVisible}/>
+
+
             <AppForm
                 initialValues={{
                     title: "",
