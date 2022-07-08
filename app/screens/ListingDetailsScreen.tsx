@@ -1,15 +1,14 @@
-import {StyleSheet, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
 import {AppText} from "../components/AppText";
 import colors from "../config/colors";
 import {ListItem} from "../components/ListItem";
-import {ListingDetailsScreenProps, NavigationTabType} from "../navigation/types";
+import {ListingDetailsScreenProps, useAppNavigation} from "../navigation/types";
 import GestureRecognizer from 'react-native-swipe-gestures'
-import {useNavigation} from "@react-navigation/native";
 import {Image} from "react-native-expo-image-cache"
+import ContactSellerForm from "../components/ContactSellerForm";
 
 export const ListingDetailsScreen = ({route}: ListingDetailsScreenProps) => {
     const {item} = route.params
-    const useAppNavigation = () => useNavigation<NavigationTabType>()
 
     const navigation = useAppNavigation()
     return (
@@ -22,22 +21,29 @@ export const ListingDetailsScreen = ({route}: ListingDetailsScreenProps) => {
                 }
             }}
         >
-            <View style={styles.container}>
-                <Image style={styles.image} tint={"light"} preview={{uri: item.images[0].thumbnailUrl}}
-                       uri={item.images[0].url}/>
-                <View style={styles.detailContainer}>
-                    <AppText style={styles.title}>{item.title}</AppText>
-                    <AppText style={styles.subTitle}>${item.price}</AppText>
-                    <View style={{marginVertical: 20}}>
-                        <ListItem
-                            image={require("./../assets/mosh.jpg")}
-                            title={"Pavel Cardash"}
-                            subTitle={"10 Listings"}
+            <KeyboardAvoidingView
+                style={{flex: 1}}
+                behavior={"position"}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 50}
+            >
+                <View style={styles.container}>
+                    <Image style={styles.image} tint={"light"} preview={{uri: item.images[0].thumbnailUrl}}
+                           uri={item.images[0].url}/>
+                    <View style={styles.detailContainer}>
+                        <AppText style={styles.title}>{item.title}</AppText>
+                        <AppText style={styles.subTitle}>${item.price}</AppText>
+                        <View style={{marginVertical: 20}}>
+                            <ListItem
+                                image={require("./../assets/mosh.jpg")}
+                                title={"Pavel Cardash"}
+                                subTitle={"10 Listings"}
 
-                        />
+                            />
+                        </View>
+                        <ContactSellerForm listing={item}/>
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </GestureRecognizer>
     );
 };

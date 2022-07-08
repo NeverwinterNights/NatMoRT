@@ -1,4 +1,4 @@
-import {NavigationProp, NavigatorScreenParams} from "@react-navigation/native";
+import {NavigationProp, NavigatorScreenParams, useNavigation} from "@react-navigation/native";
 import {ListingsNavigator} from "./ListingsNavigator";
 
 import {CategoryType} from "../store/ListingEditReducer";
@@ -35,11 +35,26 @@ export type RootTabParamList = {
 
 
 
-export type ListingDetailsScreenProps = NativeStackScreenProps<ListingsNavigatorStackParamList, 'ListingDetails'>;
-
-
-export type NavigationTabType = NavigationProp<RootTabParamList>
 // export type NavigationTabType = NavigationProp<ListingsNavigatorStackParamList>
 
 export type NavigationUseType = NavigationProp<AuthNavigatorStackParamList>
 
+
+export type  RootMainParamList = {
+    AuthNavigator:NavigatorScreenParams<AuthNavigatorStackParamList>
+    AppNavigator:NavigatorScreenParams<RootTabParamList>
+}
+
+
+export type NavigationTabType = NavigationProp<RootMainParamList>
+// const useAppNavigation = () => useNavigation<NavigationTabType>()
+export const useAppNavigation = () => useNavigation<NavigationTabType>()
+
+
+
+
+
+
+
+
+export type ListingDetailsScreenProps = NativeStackScreenProps<ListingsNavigatorStackParamList, 'ListingDetails'>;

@@ -19,14 +19,9 @@ export const Main = ({}: MainPropsType) => {
 
 
     const restoreToken = async () => {
-        // const user = await getUser()
-        // if (user) {
-        //     setUser(user as UserType)
-        // }
         const token = await getToken()
         if (!token) return
         dispatch(setUserAC(jwtDecode(token)))
-
     }
     useEffect(() => {
         async function prepare() {

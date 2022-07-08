@@ -61,8 +61,6 @@ export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
     return (
         <Screen style={styles.container}>
             <UploadScreen onDone={() => setUploadVisible(false)} progress={progress} visible={uploadVisible}/>
-
-
             <AppForm
                 initialValues={{
                     title: "",

@@ -1,6 +1,7 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 import {ListingType} from "../app/store/ListingsReducer";
 import {LocationType} from "../app/screens/ListingEditScreen";
+import {getToken} from "../storage/storage";
 
 
 export type ListingDataType = {
@@ -12,6 +13,12 @@ export type ListingDataType = {
     description: string
 }
 
+export type  UserInfoType = {
+    name: string
+    email: string
+    password: string
+}
+
 
 const instance = axios.create({
     baseURL: "http://192.168.100.229:8000/api",
@@ -19,9 +26,31 @@ const instance = axios.create({
     headers: {
         "Content-Type": "multipart/form-data",
         "cache-control": "no-cache",
-
     },
 })
+
+
+// instance.interceptors.request.use(async function (options) {
+//     options.headers && options.headers['x-auth-token'] = await getToken()
+//     return options;
+// }, function (error) {
+//     console.log('Request error: ', error);
+//     return Promise.reject(error);
+// });
+
+
+const requestHandler = async (request: any) => {
+
+    request.headers['x-auth-token'] = await getToken();
+    return request;
+};
+// const errorHandler = (error: any) => {
+//     return Promise.reject(error);
+// };
+
+instance.interceptors.request.use(
+    (request) => requestHandler(request),
+);
 
 
 export const apiRequests = {
@@ -58,6 +87,27 @@ export const apiRequests = {
                 'Content-Type': 'application/json',
             }
         })
-
+    },
+    register(userInfo: UserInfoType) {
+        return instance.post<any, AxiosResponse<any>>("/users", userInfo, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+    },
+    registerToken(pushToken: string) {
+        return instance.post("expoPushTokens", {token: pushToken}, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+    },
+    sendMessages(message: string, listingId: number) {
+        return instance.post("/messages", {message, listingId}, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
     }
 }
+

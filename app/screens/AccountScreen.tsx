@@ -9,8 +9,7 @@ import {Screen} from "../components/Screen";
 import {ListItemSeparator} from "../components/ListItemSeparator";
 import {Icon} from "../components/Icon";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-import {useNavigation} from "@react-navigation/native";
-import {NavigationTabType} from "../navigation/types";
+import {useAppNavigation} from "../navigation/types";
 import {useAppDispatch, useAppSelector} from "../store/store";
 import {setUserAC, UserType} from "../store/AppReducer";
 import {removeToken} from "../../storage/storage";
@@ -46,7 +45,6 @@ const menuItems: menuItemType[] = [
 
 function AccountScreen() {
 
-    const useAppNavigation = () => useNavigation<NavigationTabType>()
     const user = useAppSelector(state => state.appReducer.user)
     const dispatch = useAppDispatch()
 
@@ -81,7 +79,10 @@ function AccountScreen() {
                                     backgroundColor={item.icon.backgroundColor}
                                 />
                             }
-                            onPress={() => navigation.navigate("Account", {screen: item.targetScreen})}
+                            onPress={() => navigation.navigate("AppNavigator", {
+                                screen: "Account",
+                                params: {screen: item.targetScreen}
+                            })}
                         />
                     )}
                 />

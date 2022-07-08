@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import jwtDecode from "jwt-decode";
+import {setUserAC} from "../app/store/AppReducer";
 
 const key = "authToken"
 
@@ -15,7 +16,7 @@ export const getToken = async () => {
     try {
         return await SecureStore.getItemAsync(key)
     } catch (error) {
-        console.log("Error getting auth token", error);
+         console.log("Error getting auth token", error);
     }
 }
 
@@ -27,8 +28,4 @@ export const removeToken = async () => {
     }
 }
 
-// export const getUser = async () => {
-//     const token = await getToken()
-//     return (token) ? jwtDecode(token) : null
-// }
 

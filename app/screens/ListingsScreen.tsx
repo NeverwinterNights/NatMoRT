@@ -4,7 +4,7 @@ import {Screen} from "../components/Screen";
 import {Card} from "../components/Card";
 import colors from "../config/colors";
 import {useAppDispatch, useAppSelector} from "../store/store";
-import {NavigationTabType} from "../navigation/types";
+import {NavigationTabType, useAppNavigation} from "../navigation/types";
 import {useNavigation} from "@react-navigation/native";
 import {getAllListingsTh, ListingType} from "../store/ListingsReducer";
 import {AppText} from "../components/AppText";
@@ -23,7 +23,7 @@ export const ListingsScreen = ({}: ListingsScreenPropsType) => {
 
     const error: string = useAppSelector(state => state.listingsScreen.error)
 
-    const useAppNavigation = () => useNavigation<NavigationTabType>()
+
     const navigation = useAppNavigation()
     const dispatch = useAppDispatch()
 
@@ -51,12 +51,13 @@ export const ListingsScreen = ({}: ListingsScreenPropsType) => {
                       subTitle={"$" + item.price}
                       image={item.images[0].url}
                     // onPress={() => navigation.navigate("ListingDetails", {item})}/>
-                      onPress={() => navigation.navigate("Main", {screen: "ListingDetails", params: {item}})}/>
+                      onPress={() => navigation.navigate("AppNavigator", {screen: "Main",  params: {screen:"ListingDetails", params:{item}}})}/>
             }/>
         </Screen>
 
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

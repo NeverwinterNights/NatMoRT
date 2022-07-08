@@ -1,20 +1,25 @@
-import React, {useState} from "react";
+import React from "react";
 import {StyleSheet} from "react-native";
 import * as Yup from "yup";
 import {Screen} from "../components/Screen";
 
-import {ErrorMessage, FormikValues} from "formik";
-import { AppForm } from "../components/form/AppForm";
+import {FormikValues} from "formik";
+import {AppForm} from "../components/form/AppForm";
 import {ErrorMessages} from "../components/form/ErrorMessages";
-import { AppFormField } from "../components/form/AppFormField";
-import { SubmitButton } from "../components/form/SubmitButton";
+import {AppFormField} from "../components/form/AppFormField";
+import {SubmitButton} from "../components/form/SubmitButton";
+import {useAppDispatch, useAppSelector} from "../store/store";
+import {registerTh} from "../store/AppReducer";
+import {ActivityIndic} from "../components/ActivityIndicator";
 
 
 export const RegisterScreen = () => {
-    const [error, setError] = useState<string>();
+    const dispatch = useAppDispatch()
+    const error = useAppSelector(state => state.appReducer.registerError)
+    const isLoading = useAppSelector(state => state.appReducer.loading)
+
 
     // const loginApi = useApi(authApi.login);
-
 
 
     const validationSchema = Yup.object().shape({
@@ -23,22 +28,20 @@ export const RegisterScreen = () => {
         password: Yup.string().required().min(4).label("Password"),
     });
 
-    const handleSubmit = async (userInfo: FormikValues) => {
-        console.log("object");
+    const handleSubmit = async (values: FormikValues) => {
+        dispatch(registerTh({values}))
     }
 
     return (
         <>
-
+            <ActivityIndic styleInd={{top:100}}  visible={isLoading}/>
             <Screen style={styles.container}>
-                {/*<ActivityIndicator visible={registerApi.loading || loginApi.loading}/>*/}
-
                 <AppForm
                     initialValues={{name: "", email: "", password: ""}}
                     onSubmit={handleSubmit}
                     validationSchema={validationSchema}
                 >
-                    <ErrorMessages error={error} />
+                    <ErrorMessages error={error}/>
                     <AppFormField
                         autoCorrect={false}
                         icon="account"

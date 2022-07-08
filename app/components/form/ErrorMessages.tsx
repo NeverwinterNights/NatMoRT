@@ -4,6 +4,7 @@ import {AppText} from "../AppText";
 
 type ErrorMessagesPropsType = {
     error?: string
+    visible?: boolean
 }
 
 export const ErrorMessages = ({error}: ErrorMessagesPropsType) => {

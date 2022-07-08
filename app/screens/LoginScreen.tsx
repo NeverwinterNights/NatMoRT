@@ -7,9 +7,8 @@ import {AppFormField} from "../components/form/AppFormField";
 import {SubmitButton} from "../components/form/SubmitButton";
 import {AppForm} from "../components/form/AppForm";
 import {useAppDispatch, useAppSelector} from "../store/store";
-import {authTh} from "../store/AppReducer";
+import {loginTh} from "../store/AppReducer";
 import {ErrorMessages} from "../components/form/ErrorMessages";
-import {storeToken} from "../../storage/storage";
 
 
 type LoginScreenPropsType = {}
@@ -17,7 +16,6 @@ type LoginScreenPropsType = {}
 export const LoginScreen = ({}: LoginScreenPropsType) => {
     const dispatch = useAppDispatch()
     const loginError = useAppSelector(state => state.appReducer.loginError)
-    const token = useAppSelector(state => state.appReducer.authToken)
 
 
     const validationSchema = Yup.object().shape({
@@ -27,7 +25,7 @@ export const LoginScreen = ({}: LoginScreenPropsType) => {
 
 
     const handleSubmit = async (authData: FormikValues) => {
-        dispatch(authTh({authData}))
+        dispatch(loginTh({authData}))
     }
 
     return (
