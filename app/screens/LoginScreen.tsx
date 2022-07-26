@@ -28,6 +28,10 @@ export const LoginScreen = ({}: LoginScreenPropsType) => {
         dispatch(loginTh({authData}))
     }
 
+
+
+    
+
     return (
         <Screen style={styles.container}>
             <Image style={styles.logo} source={require("../assets/logo-red.png")}/>

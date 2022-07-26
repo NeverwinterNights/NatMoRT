@@ -7,9 +7,15 @@ import * as SplashScreen from 'expo-splash-screen';
 import {setUserAC} from "../store/AppReducer";
 import {getToken} from "../../storage/storage";
 import jwtDecode from "jwt-decode";
+import {RootNavigator} from "../navigation/RootNavigator";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {RootMainParamList} from "../navigation/types";
 
 
 type MainPropsType = {}
+
+const Stack = createNativeStackNavigator<RootMainParamList>()
+
 
 export const Main = ({}: MainPropsType) => {
     const user = useAppSelector(state => state.appReducer.user)
@@ -52,7 +58,10 @@ export const Main = ({}: MainPropsType) => {
 
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
-            {Object.keys(user).length > 0 ? <AppNavigator/> : <AuthNavigator/>}
+            <Stack.Navigator>
+                {Object.keys(user).length > 0 ? <Stack.Screen name="AppNavigator" component={AppNavigator} options={{headerTitleAlign: "center", headerShown: false}}/> : <Stack.Screen name="AuthNavigator" component={AuthNavigator} options={{headerShown: false}}/>}
+            </Stack.Navigator>
+
         </View>
     );
 };

@@ -60,8 +60,8 @@ function AccountScreen() {
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <ListItem
-                    title={user.name}
-                    subTitle={user.email}
+                    title={"Pavel"}
+                    subTitle={"cardash@mail.ru"}
                     image={require("../assets/mosh.jpg")}
                 />
             </View>

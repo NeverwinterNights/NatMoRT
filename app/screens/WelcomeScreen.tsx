@@ -1,12 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
 import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import AppButton from "../components/AppButton";
-import {NavigationUseType, useAppNavigation} from "../navigation/types";
-
+import {useAppNavigation} from "../navigation/types";
 
 
 export const WelcomeScreen = () => {
-
 
 
     const navigation = useAppNavigation()
@@ -19,8 +16,9 @@ export const WelcomeScreen = () => {
                 <Text style={styles.title}>Sell What You Wanna Sell</Text>
             </View>
             <View style={{paddingHorizontal: 5, width: "100%"}}>
-                <AppButton title={"Login"} onPress={()=> navigation.navigate("AuthNavigator", {screen: "Login",  })}/>
-                <AppButton color={"secondary"} title={"Register"} onPress={()=> navigation.navigate("AuthNavigator", {screen: "Register"})}/>
+                <AppButton title={"Login"} onPress={() => navigation.navigate("AuthNavigator", {screen: "Login",})}/>
+                <AppButton color={"secondary"} title={"Register"}
+                           onPress={() => navigation.navigate( "AuthNavigator", {screen:"Register"})}/>
             </View>
         </ImageBackground>
     );

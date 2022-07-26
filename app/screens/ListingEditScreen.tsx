@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet} from 'react-native';
 import * as Yup from "yup";
 import {AppForm} from '../components/form/AppForm';
 import {SubmitButton} from '../components/form/SubmitButton';
@@ -59,47 +59,54 @@ export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
     }
 
     return (
-        <Screen style={styles.container}>
-            <UploadScreen onDone={() => setUploadVisible(false)} progress={progress} visible={uploadVisible}/>
-            <AppForm
-                initialValues={{
-                    title: "",
-                    price: "",
-                    description: "",
-                    category: null,
-                    images: imagesData
-                }}
-                onSubmit={handleSubmit}
-                validationSchema={validationSchema}
-            >
-                <FormImagePicker name={"images"}/>
-                <AppFormField maxLength={255} name="title" placeholder="Title"/>
-                <AppFormField
-                    keyboardType="numeric"
-                    maxLength={8}
-                    name="price"
-                    placeholder="Price"
-                    width={120}
-                />
-                <AppFormPicker
-                    PickerItemComponent={CategoryPickerItem}
-                    width={"50%"}
-                    items={categories}
-                    numbersOfColumn={3}
-                    name="category"
-                    placeholder="Category"
-                />
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <Screen style={styles.container}>
 
-                <AppFormField
-                    maxLength={255}
-                    multiline
-                    name="description"
-                    numberOfLines={3}
-                    placeholder="Description"
-                />
-                <SubmitButton title="Post"/>
-            </AppForm>
-        </Screen>
+                <KeyboardAvoidingView style={{flex: 1}} behavior={"position"}
+                                      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 50}>
+                    <UploadScreen onDone={() => setUploadVisible(false)} progress={progress} visible={uploadVisible}/>
+                    <AppForm
+                        initialValues={{
+                            title: "",
+                            price: "",
+                            description: "",
+                            category: null,
+                            images: imagesData
+                        }}
+                        onSubmit={handleSubmit}
+                        validationSchema={validationSchema}
+                    >
+                        <FormImagePicker name={"images"}/>
+                        <AppFormField maxLength={255} name="title" placeholder="Title"/>
+                        <AppFormField
+                            keyboardType="numeric"
+                            maxLength={8}
+                            name="price"
+                            placeholder="Price"
+                            width={120}
+                        />
+                        <AppFormPicker
+                            PickerItemComponent={CategoryPickerItem}
+                            width={"50%"}
+                            items={categories}
+                            numbersOfColumn={3}
+                            name="category"
+                            placeholder="Category"
+                        />
+
+                        <AppFormField
+                            maxLength={255}
+                            multiline
+                            name="description"
+                            numberOfLines={3}
+                            placeholder="Description"
+                        />
+                        <SubmitButton title="Post"/>
+                    </AppForm>
+                </KeyboardAvoidingView>
+
+            </Screen>
+       </ScrollView>
     );
 };
 

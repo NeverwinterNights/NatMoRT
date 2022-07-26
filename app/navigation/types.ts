@@ -48,7 +48,8 @@ export type  RootMainParamList = {
 
 export type NavigationTabType = NavigationProp<RootMainParamList>
 // const useAppNavigation = () => useNavigation<NavigationTabType>()
-export const useAppNavigation = () => useNavigation<NavigationTabType>()
+// export const useAppNavigation = () => useNavigation<NavigationTabType>()
+export const useAppNavigation = () => useNavigation<NavigationProp<RootMainParamList>>()
 
 
 

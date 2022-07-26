@@ -38,7 +38,7 @@ export const MessagesScreen = ({}: MessagesScreenPropsType) => {
     };
 
     return (
-        <View>
+        <Screen>
             <FlatList data={messages} keyExtractor={(item) => item.id.toString()} renderItem={({item}) =>
                 <ListItem
                     onPress={() => console.log()}
@@ -74,7 +74,7 @@ export const MessagesScreen = ({}: MessagesScreenPropsType) => {
                           ]);
                       }}
             />
-        </View>
+        </Screen>
     );
 };
 

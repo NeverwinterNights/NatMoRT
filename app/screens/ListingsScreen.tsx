@@ -1,16 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import { FlatList, StyleSheet, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Screen} from "../components/Screen";
 import {Card} from "../components/Card";
 import colors from "../config/colors";
 import {useAppDispatch, useAppSelector} from "../store/store";
-import {NavigationTabType, useAppNavigation} from "../navigation/types";
-import {useNavigation} from "@react-navigation/native";
+import {useAppNavigation} from "../navigation/types";
 import {getAllListingsTh, ListingType} from "../store/ListingsReducer";
 import {AppText} from "../components/AppText";
 import AppButton from "../components/AppButton";
 import {ActivityIndic} from "../components/ActivityIndicator";
-
 
 
 type ListingsScreenPropsType = {}
@@ -28,11 +26,9 @@ export const ListingsScreen = ({}: ListingsScreenPropsType) => {
     const dispatch = useAppDispatch()
 
 
-
     useEffect(() => {
         dispatch(getAllListingsTh())
     }, [])
-
 
 
     return (
@@ -51,7 +47,10 @@ export const ListingsScreen = ({}: ListingsScreenPropsType) => {
                       subTitle={"$" + item.price}
                       image={item.images[0].url}
                     // onPress={() => navigation.navigate("ListingDetails", {item})}/>
-                      onPress={() => navigation.navigate("AppNavigator", {screen: "Main",  params: {screen:"ListingDetails", params:{item}}})}/>
+                      onPress={() => navigation.navigate("AppNavigator", {
+                          screen: "Main",
+                          params: {screen: "ListingDetails", params: {item}}
+                      })}/>
             }/>
         </Screen>
 
