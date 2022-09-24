@@ -29,7 +29,6 @@ export const FormImagePicker = ({name}: FormImagePickerPropsType) => {
     }
 
 
-
     return (
         <>
             {/*<ImageInputList />*/}

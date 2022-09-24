@@ -26,13 +26,11 @@ export type AccountNavigatorStackParamList = {
 }
 
 
-
 export type RootTabParamList = {
     Main: NavigatorScreenParams<ListingsNavigatorStackParamList>;
     ListingEdit: undefined
     Account: NavigatorScreenParams<AccountNavigatorStackParamList>;
 }
-
 
 
 // export type NavigationTabType = NavigationProp<ListingsNavigatorStackParamList>
@@ -41,8 +39,8 @@ export type NavigationUseType = NavigationProp<AuthNavigatorStackParamList>
 
 
 export type  RootMainParamList = {
-    AuthNavigator:NavigatorScreenParams<AuthNavigatorStackParamList>
-    AppNavigator:NavigatorScreenParams<RootTabParamList>
+    AuthNavigator: NavigatorScreenParams<AuthNavigatorStackParamList>
+    AppNavigator: NavigatorScreenParams<RootTabParamList>
 }
 
 
@@ -50,12 +48,6 @@ export type NavigationTabType = NavigationProp<RootMainParamList>
 // const useAppNavigation = () => useNavigation<NavigationTabType>()
 // export const useAppNavigation = () => useNavigation<NavigationTabType>()
 export const useAppNavigation = () => useNavigation<NavigationProp<RootMainParamList>>()
-
-
-
-
-
-
 
 
 export type ListingDetailsScreenProps = NativeStackScreenProps<ListingsNavigatorStackParamList, 'ListingDetails'>;

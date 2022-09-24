@@ -77,7 +77,6 @@ export const apiRequests = {
         return instance.post("/listings", data, {
             onUploadProgress: (progress) => {
                 onUploadProgress(progress.loaded / progress.total)
-
             }
         })
     },

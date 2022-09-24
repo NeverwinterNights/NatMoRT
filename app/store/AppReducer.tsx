@@ -50,7 +50,9 @@ export const loginTh = createAsyncThunk("app/authTh", async (param: { authData: 
     dispatch(setLoadingAC(true))
     try {
         const res = await apiRequests.login(param.authData.email, param.authData.password)
+
         const decodeUser: UserType = jwtDecode(res.data)
+
         dispatch(setUserAC({...decodeUser}))
         await storeToken(res.data)
         dispatch(setLoadingAC(false))
@@ -85,8 +87,8 @@ export const sendPushTokenTh = createAsyncThunk("app/sendTushTokenTh", async (to
     dispatch,
     rejectWithValue
 }) => {
-
     try {
+
         const results = await apiRequests.registerToken(token)
     } catch (error) {
 

@@ -11,6 +11,7 @@ import AppButton from "./AppButton";
 import {Keyboard, Platform, TextInput} from "react-native";
 import colors from "../config/colors";
 import {AppText} from "./AppText";
+import {mainAPI} from "../store/RTKSlice";
 
 
 type  ContactSellerFormPropsType = {
@@ -20,6 +21,7 @@ type  ContactSellerFormPropsType = {
 
 function ContactSellerForm({listing}: ContactSellerFormPropsType) {
     const dispatch = useAppDispatch()
+    const [sendMessages, {isError, error}] = mainAPI.useSendMessagesMutation();
 
 
     const validationSchema = Yup.object().shape({
@@ -39,7 +41,12 @@ function ContactSellerForm({listing}: ContactSellerFormPropsType) {
     const handleSubmit = async ({message}: FormikValues, {resetForm}: FormikHelpers<any>) => {
 
 
-        dispatch(sendMessageTh({message, listingId: listing.id}))
+        // dispatch(sendMessageTh({message, listingId: listing.id}))
+
+
+        await sendMessages({message, listingId: listing.id})
+
+
         resetForm()
         Keyboard.dismiss();
 

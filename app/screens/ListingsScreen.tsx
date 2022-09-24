@@ -9,6 +9,7 @@ import {getAllListingsTh, ListingType} from "../store/ListingsReducer";
 import {AppText} from "../components/AppText";
 import AppButton from "../components/AppButton";
 import {ActivityIndic} from "../components/ActivityIndicator";
+import {mainAPI} from "../store/RTKSlice";
 
 
 type ListingsScreenPropsType = {}
@@ -16,19 +17,22 @@ type ListingsScreenPropsType = {}
 
 export const ListingsScreen = ({}: ListingsScreenPropsType) => {
 
-    const listings: ListingType[] | undefined = useAppSelector(state => state.listingsScreen.listings)
+    // const listings: ListingType[] | undefined = useAppSelector(state => state.listingsScreen.listings)
     const isLoading: boolean = useAppSelector(state => state.appReducer.loading)
 
-    const error: string = useAppSelector(state => state.listingsScreen.error)
+    // const error: string = useAppSelector(state => state.listingsScreen.error)
 
 
     const navigation = useAppNavigation()
     const dispatch = useAppDispatch()
 
 
-    useEffect(() => {
-        dispatch(getAllListingsTh())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getAllListingsTh())
+    // }, [])
+    const {data = [], error} = mainAPI.useFetchAllListingsQuery();
+
+
 
 
     return (
@@ -40,7 +44,7 @@ export const ListingsScreen = ({}: ListingsScreenPropsType) => {
             </View>
             }
             <ActivityIndic visible={isLoading}/>
-            <FlatList data={listings} showsVerticalScrollIndicator={false}
+            <FlatList data={data} showsVerticalScrollIndicator={false}
                       keyExtractor={(listing) => listing.id.toString()} renderItem={({item}) =>
                 <Card thumbnailUrl={item.images[0].thumbnailUrl}
                       title={item.title}

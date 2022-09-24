@@ -13,6 +13,8 @@ import {useLocation} from '../../hooks/useLocation';
 import {addListingsTh} from "../store/ListingsReducer";
 import {UploadScreen} from "./UploadScreen";
 import {FormikHelpers} from "formik";
+import {mainAPI} from "../store/RTKSlice";
+import {clearImagesAC} from "../store/ListingEditReducer";
 
 
 export type LocationType = {
@@ -42,24 +44,61 @@ export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
 
     const categories = useAppSelector(state => state.listingEditScreen.categories)
     const imagesData = useAppSelector(state => state.listingEditScreen.images)
-    const error: string = useAppSelector(state => state.listingsScreen.error)
+    // const error: string = useAppSelector(state => state.listingsScreen.error)
 
 
-    const handleSubmit = (listing: any, {resetForm}: FormikHelpers<any>) => {
-        setProgress(0)
+    // const handleSubmit = (listing: any, {resetForm}: FormikHelpers<any>) => {
+    //     setProgress(0)
+    //     setUploadVisible(true)
+    //     dispatch(addListingsTh({
+    //             listing: {...listing, location},
+    //             onUploadProgress: (progress: number) => setProgress(progress)
+    //         },
+    //     ))
+    //     if (!error) {
+    //         resetForm()
+    //     }
+    // }
+
+    const [addListings, {
+        status,
+        isError,
+        error,
+        data,
+        isLoading,
+        fulfilledTimeStamp,
+        startedTimeStamp
+    }] = mainAPI.useAddListingsMutation();
+    const handleSubmit = async (listing: any, {resetForm}: FormikHelpers<any>) => {
         setUploadVisible(true)
-        dispatch(addListingsTh({
-                listing: {...listing, location},
-                onUploadProgress: (progress: number) => setProgress(progress)
-            },
-        ))
+        const data = new FormData()
+        data.append("title", listing.title)
+        data.append("price", listing.price)
+        data.append("categoryId", listing.category.value)
+        data.append("description", listing.description)
+        listing.images.forEach((image: any, index: any) =>
+            data.append("images", {
+                // @ts-ignore
+                name: "image" + index,
+                type: "image/jpeg",
+                uri: image
+            }))
+        if (listing.location) {
+            data.append("location", JSON.stringify(listing.location))
+        }
+        await addListings(data).unwrap()
         if (!error) {
             resetForm()
+            dispatch(clearImagesAC())
+            setProgress(1)
         }
     }
 
+
+
+    console.log("status", status)
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={"handled"}>
             <Screen style={styles.container}>
 
                 <KeyboardAvoidingView style={{flex: 1}} behavior={"position"}
@@ -106,7 +145,7 @@ export const ListingEditScreen = ({}: ListingEditScreenPropsType) => {
                 </KeyboardAvoidingView>
 
             </Screen>
-       </ScrollView>
+        </ScrollView>
     );
 };
 

@@ -11,16 +11,18 @@ import {SubmitButton} from "../components/form/SubmitButton";
 import {useAppDispatch, useAppSelector} from "../store/store";
 import {registerTh} from "../store/AppReducer";
 import {ActivityIndic} from "../components/ActivityIndicator";
+import {mainAPI} from "../store/RTKSlice";
+import {UserInfoType} from "../../api/client";
 
 
 export const RegisterScreen = () => {
     const dispatch = useAppDispatch()
-    const error = useAppSelector(state => state.appReducer.registerError)
-    const isLoading = useAppSelector(state => state.appReducer.loading)
+    // const error = useAppSelector(state => state.appReducer.registerError)
+    // const isLoading = useAppSelector(state => state.appReducer.loading)
 
 
     // const loginApi = useApi(authApi.login);
-
+    const [register, {isLoading, data, error}] = mainAPI.useRegisterMutation();
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required().label("Name"),
@@ -28,8 +30,14 @@ export const RegisterScreen = () => {
         password: Yup.string().required().min(4).label("Password"),
     });
 
+    // const handleSubmit = async (values: FormikValues) => {
+    //     // dispatch(registerTh({values}))
+    // }
+
     const handleSubmit = async (values: FormikValues) => {
-        dispatch(registerTh({values}))
+        // dispatch(registerTh({values}))
+        register(values as UserInfoType).unwrap()
+
     }
 
     return (
@@ -41,7 +49,7 @@ export const RegisterScreen = () => {
                     onSubmit={handleSubmit}
                     validationSchema={validationSchema}
                 >
-                    <ErrorMessages error={error}/>
+                    <ErrorMessages error={error as string}/>
                     <AppFormField
                         autoCorrect={false}
                         icon="account"

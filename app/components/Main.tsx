@@ -10,6 +10,7 @@ import jwtDecode from "jwt-decode";
 import {RootNavigator} from "../navigation/RootNavigator";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {RootMainParamList} from "../navigation/types";
+import {useSelector} from "react-redux";
 
 
 type MainPropsType = {}
@@ -18,8 +19,11 @@ const Stack = createNativeStackNavigator<RootMainParamList>()
 
 
 export const Main = ({}: MainPropsType) => {
-    const user = useAppSelector(state => state.appReducer.user)
+     // const user = useAppSelector(state => state.appReducer.user)
+     const user = useAppSelector(state => state.appReducer.user)
+
     const [isReady, setIsReady] = useState<boolean>(false);
+
 
     const dispatch = useAppDispatch()
 
@@ -59,7 +63,10 @@ export const Main = ({}: MainPropsType) => {
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
             <Stack.Navigator>
-                {Object.keys(user).length > 0 ? <Stack.Screen name="AppNavigator" component={AppNavigator} options={{headerTitleAlign: "center", headerShown: false}}/> : <Stack.Screen name="AuthNavigator" component={AuthNavigator} options={{headerShown: false}}/>}
+                {Object.keys(user).length > 0
+                    ? <Stack.Screen name="AppNavigator" component={AppNavigator}
+                                    options={{headerTitleAlign: "center", headerShown: false}}/>
+                    : <Stack.Screen name="AuthNavigator" component={AuthNavigator} options={{headerShown: false}}/>}
             </Stack.Navigator>
 
         </View>
